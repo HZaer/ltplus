@@ -19,7 +19,7 @@ import com.lt.entity.Book;
 import com.lt.enums.AppointStateEnum;
 import com.lt.exception.NoNumberException;
 import com.lt.exception.RepeatAppointException;
-import com.lt.service.BookService;
+import com.lt.BookService;
 
 @Controller
 @RequestMapping("/book") // url:/模块/资源/{id}/细分 /seckill/list
@@ -56,7 +56,7 @@ public class BookController {
 			"application/json; charset=utf-8" })
 	@ResponseBody
 	private Result<AppointExecution> appoint(@PathVariable("bookId") Long bookId, @RequestParam("studentId") Long studentId) {
-		if (studentId == null || studentId.equals("")) {
+		if (studentId == null) {
 			return new Result<>(false, "学号不能为空");
 		}
 		AppointExecution execution = null;
@@ -69,7 +69,7 @@ public class BookController {
 		} catch (Exception e) {
 			execution = new AppointExecution(bookId, AppointStateEnum.INNER_ERROR);
 		}
-		return new Result<AppointExecution>(true, execution);
+		return new Result<>(true, execution);
 	}
 
 }
